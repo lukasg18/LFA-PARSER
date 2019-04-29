@@ -1,16 +1,17 @@
-import conversorBib
+import parse_biblioteca
 
 try:
-    input = raw_input   # compativel com python 2
+    input = raw_input
 except NameError:
     pass
 
 def main():
 	code = ''
+	print("digite '/q' para sair do programa")
 	while (code != '/q'):
 		code = input('> ')
 		try:
-			conversorBib.le_terminal(code)
+			parse_biblioteca.le_terminal(code)
 		except Exception as e:
 			print(e)
 
