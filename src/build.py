@@ -1,4 +1,4 @@
-import parse_biblioteca
+from ParserCalc import ParserCalc
 
 try:
     input = raw_input
@@ -6,14 +6,10 @@ except NameError:
     pass
 
 def main():
-	code = ''
-	print("digite '/q' para sair do programa")
-	while (code != '/q'):
-		code = input('> ')
-		try:
-			parse_biblioteca.parser_desc(code)
-		except Exception as e:
-			print(e)
+    while True:
+        # ignorando espacos
+        lst = list(input('> ').replace(' ', ''))
+        ParserCalc(lst).parser(lst)
 
 if __name__ == '__main__':
     main()
