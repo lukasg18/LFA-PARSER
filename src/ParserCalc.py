@@ -59,13 +59,16 @@ class ParserCalc():
 
     def term(self):
         result = self.factor()
-        while self._current in ('*', '/', '%'):
+        while self._current in ('*', '/', '%', '//'):
             if self._current == '*':
                 self.next()
                 result *= self.term()
             if self._current == '/':
                 self.next()
                 result /= self.term()
+            if self._current == '//':
+                self.next()
+                result //= self.term()
             if self._current == '%':
                 self.next()
                 result %= self.term()
