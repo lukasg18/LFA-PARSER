@@ -29,6 +29,8 @@ class ParserCalc():
                 if numbers != '':
                     tokens.append(numbers)
                     numbers = ''
+                    
+        #caso especial caso a pessoa so coloque somente numeros como entrada
         if (numbers != '' and operators == ''):
             tokens.append(numbers)
 
