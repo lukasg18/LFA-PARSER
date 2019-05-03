@@ -17,6 +17,7 @@ class ParserCalc():
         tokens = []
         numbers = ''
         operators = ''
+        parent = ''
 
         for i in range(len(lst)):
             if (self.digit(lst[i])):
@@ -25,15 +26,24 @@ class ParserCalc():
                     tokens.append(operators)
                     operators = ''
             else:
-                operators += lst[i]
+                if(lst[i] == '(' or lst[i] == ')'):
+                    parent += lst[i]
+                    if (operators != ''):
+                        tokens.append(operators)
+                        operators = ''
+                else:
+                    operators += lst[i]
                 if numbers != '':
                     tokens.append(numbers)
                     numbers = ''
+            if(parent != ''):
+                tokens.append(parent)
+                parent = ''
                     
         #caso especial caso a pessoa so coloque somente numeros como entrada
         if (numbers != '' and operators == ''):
             tokens.append(numbers)
-
+        print(tokens)
         return tokens
     
     def parser(self,lst):
