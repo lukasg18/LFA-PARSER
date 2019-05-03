@@ -12,6 +12,7 @@ class ParserCalc():
     def __init__(self, tokens):
         self._tokens = tokens
         self._current = tokens[0]
+        self._operator = ''
 
     def make_list(self, lst):
         tokens = []
@@ -40,10 +41,9 @@ class ParserCalc():
                 tokens.append(parent)
                 parent = ''
                     
-        #caso especial caso a pessoa so coloque somente numeros como entrada
-        if (numbers != '' and operators == ''):
+        # caso só exista somente numeros como entrada
+        if (numbers != '' and operators == '' and parent == ''):
             tokens.append(numbers)
-        print(tokens)
         return tokens
     
     def parser(self,lst):
@@ -96,13 +96,23 @@ class ParserCalc():
 
     def base(self):
         result = None
-        if self.digit(self._current[0]) or self.digit(self._current[-1]):
-            result = float(self._current)
-            self.next()
+        if self.digit(self._current[0]):
+            if(self._operator is '-'):
+                result = float(self._current) * float(-1.0)
+                self._operator = ''
+            else:
+                result = float(self._current)
+                self.next()
         elif self._current is '(':
             self.next()
             result = self.exp()
             self.next()
+        else:
+            if self._current is '-':
+                self._operator = '-'
+                self.next()
+                result = self.base()
+                self.next()
         return result
 
     def digit(self, current):
