@@ -1,4 +1,4 @@
-from ParserCalc import ParserCalc
+from mel import MEL
 
 try:
     input = raw_input
@@ -12,7 +12,7 @@ def main():
         if len(lst) == 0:
             print("Favor inserir uma expressao")
         else:
-            ParserCalc(lst).parser(lst)
+            MEL(lst).parser(lst)
 
 if __name__ == '__main__':
     main()

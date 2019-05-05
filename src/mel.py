@@ -8,7 +8,7 @@ digit ::= '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9'
 
 from operator import floordiv, mod
 
-class ParserCalc():
+class MEL():
     def __init__(self, tokens):
         self._tokens = tokens
         self._current = tokens[0]
@@ -19,13 +19,16 @@ class ParserCalc():
         numbers, operators = '', ''
 
         for i in range(len(lst)):
+            # concatenando numeros seguidos por numeros, numeros com '.' e numeros com 'e'
             if (self.digit(lst[i]) or lst[i] == '.' or lst[i] == 'e' or lst[i] == 'E'):
                 numbers += lst[i]
                 if operators != '':
                     tokens.append(operators)
                     operators = ''
             else:
+                # se ja existe um operador '/'
                 if operators != '':
+                    # caso a expressao tenha '//', ambos ficam na mesma posicao da lista
                     if (operators is '/' and lst[i] is '/'):
                         operators += lst[i]
                     else:
@@ -45,9 +48,10 @@ class ParserCalc():
     
     def parser(self,lst):
         tokens = []
+        # caso a expressao nao seja aceita
         try:
             tokens = self.mount_expression(lst)
-            print(ParserCalc(tokens).exp())
+            print(MEL(tokens).exp())
         except:
             print("expressao invalida")
 
@@ -98,6 +102,7 @@ class ParserCalc():
     def base(self):
         result = None
         if self.digit(self._current[0]):
+            # negando o numero: (-) base
             if(self._operator is '-'):
                 result = float(self._current) * float(-1.0)
                 self._operator = ''
@@ -105,6 +110,7 @@ class ParserCalc():
                 result = float(self._current)
                 self.next()
         elif self._current is '(':
+            # caso a expressao for negagativa: (-) expr
             if(self._operator is '-'):                
                 self._operator = ''
                 self.next()
@@ -116,6 +122,7 @@ class ParserCalc():
                 result = self.exp()
                 self.next()
         else:
+            # caso o numero inserido for negativo
             if self._current is '-':
                 self._operator = '-'
                 self.next()
