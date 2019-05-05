@@ -2,7 +2,7 @@
 expr ::= term (('+' | '-') term)*
 term ::= factor (('*' | '/' | '//' | '%') factor)*
 factor ::= base ('^' factor)?
-base ::= base | '(' expr ')'
+base ::= (+|-) base | '(' expr ')'
 digit ::= '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9'
 """
 
@@ -21,26 +21,38 @@ class ParserCalc():
         parent = ''
 
         for i in range(len(lst)):
-            if (self.digit(lst[i])):
+            if (self.digit(lst[i]) or lst[i] == '.' or lst[i] == 'e' or lst[i] == 'E'):
                 numbers += lst[i]
                 if operators != '':
                     tokens.append(operators)
                     operators = ''
             else:
-                if(lst[i] == '(' or lst[i] == ')'):
-                    parent += lst[i]
-                    if (operators != ''):
+            #     if(lst[i] == '(' or lst[i] == ')'):
+            #         parent += lst[i]
+            #         if (operators != ''):
+            #             tokens.append(operators)
+            #             operators = ''
+            #     else:
+            #         operators += lst[i]
+            #     if numbers != '':
+            #         tokens.append(numbers)
+            #         numbers = ''
+            # if(parent != ''):
+            #     tokens.append(parent)
+            #     parent = ''
+                if operators != '':
+                    if (operators is '/' and lst[i] is '/'):
+                        operators += lst[i]
+                    else:
                         tokens.append(operators)
+                        tokens.append(lst[i])
                         operators = ''
                 else:
                     operators += lst[i]
                 if numbers != '':
                     tokens.append(numbers)
                     numbers = ''
-            if(parent != ''):
-                tokens.append(parent)
-                parent = ''
-                    
+
         # caso só exista somente numeros como entrada
         if (numbers != '' and operators == '' and parent == ''):
             tokens.append(numbers)
@@ -98,15 +110,25 @@ class ParserCalc():
         result = None
         if self.digit(self._current[0]):
             if(self._operator is '-'):
-                result = float(self._current) * float(-1.0)
-                self._operator = ''
+                if(self._current is '-'):
+                    None
+                else: 
+                    result = float(self._current) * float(-1.0)
+                    self._operator = ''
             else:
                 result = float(self._current)
                 self.next()
         elif self._current is '(':
-            self.next()
-            result = self.exp()
-            self.next()
+            if(self._operator is '-'):                
+                self._operator = ''
+                self.next()
+                result = self.exp()
+                result *= (-1)
+                self.next()
+            else: 
+                self.next()
+                result = self.exp()
+                self.next()
         else:
             if self._current is '-':
                 self._operator = '-'
