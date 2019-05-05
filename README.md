@@ -75,11 +75,11 @@ O trecho de codigo mostrado acima representa o construtor da classe. O construto
 O mesmo trecho citado acima também mostra o método chamado `parser`, que tem por responsabilidade ser um intermediario entre a montagem da expressao e a chamada da mesma.
 O método `parser` depois de executado, chamará os demais metodos da classe, seguindo as regras de produção definidas para a gramática que é mostrada logo abaixo.
 
-> expr ::= term (('+' | '-') term)*
-> term ::= factor (('*' | '/' | '//' | '%') factor)*
-> factor ::= base ('^' factor)?
-> base ::= (-) base | '(' expr ')'
-> digit ::= '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9'
+* expr ::= term (('+' | '-') term)*
+* term ::= factor (('*' | '/' | '//' | '%') factor)*
+* factor ::= base ('^' factor)?
+* base ::= (-) base | '(' expr ')'
+* digit ::= '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9'
 
 
 ##### main.py
