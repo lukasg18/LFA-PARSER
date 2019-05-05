@@ -9,7 +9,10 @@ def main():
     while True:
         # ignorando espacos
         lst = list(input('> ').replace(' ', ''))
-        ParserCalc(lst).parser(lst)
+        if len(lst) == 0:
+            print("Favor inserir uma expressao")
+        else:
+            ParserCalc(lst).parser(lst)
 
 if __name__ == '__main__':
     main()

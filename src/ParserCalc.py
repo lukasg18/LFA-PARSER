@@ -2,7 +2,7 @@
 expr ::= term (('+' | '-') term)*
 term ::= factor (('*' | '/' | '//' | '%') factor)*
 factor ::= base ('^' factor)?
-base ::= (+|-) base | '(' expr ')'
+base ::= (-) base | '(' expr ')'
 digit ::= '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9'
 """
 
@@ -45,8 +45,11 @@ class ParserCalc():
     
     def parser(self,lst):
         tokens = []
-        tokens = self.make_list(lst)
-        print(ParserCalc(tokens).exp())
+        try:
+            tokens = self.make_list(lst)
+            print(ParserCalc(tokens).exp())
+        except:
+            print("expressao invalida")
 
     def next(self): 
         #pula o primeiro elemento, pois ele ja foi processado
@@ -65,6 +68,7 @@ class ParserCalc():
                 self.next()
                 result -= self.term()
         return result
+
 
     def term(self):
         result = self.factor()
@@ -95,11 +99,8 @@ class ParserCalc():
         result = None
         if self.digit(self._current[0]):
             if(self._operator is '-'):
-                if(self._current is '-'):
-                    None
-                else: 
-                    result = float(self._current) * float(-1.0)
-                    self._operator = ''
+                result = float(self._current) * float(-1.0)
+                self._operator = ''
             else:
                 result = float(self._current)
                 self.next()
