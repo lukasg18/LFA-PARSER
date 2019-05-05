@@ -16,9 +16,7 @@ class ParserCalc():
 
     def make_list(self, lst):
         tokens = []
-        numbers = ''
-        operators = ''
-        parent = ''
+        numbers, operators = '', ''
 
         for i in range(len(lst)):
             if (self.digit(lst[i]) or lst[i] == '.' or lst[i] == 'e' or lst[i] == 'E'):
@@ -27,19 +25,6 @@ class ParserCalc():
                     tokens.append(operators)
                     operators = ''
             else:
-            #     if(lst[i] == '(' or lst[i] == ')'):
-            #         parent += lst[i]
-            #         if (operators != ''):
-            #             tokens.append(operators)
-            #             operators = ''
-            #     else:
-            #         operators += lst[i]
-            #     if numbers != '':
-            #         tokens.append(numbers)
-            #         numbers = ''
-            # if(parent != ''):
-            #     tokens.append(parent)
-            #     parent = ''
                 if operators != '':
                     if (operators is '/' and lst[i] is '/'):
                         operators += lst[i]
@@ -54,7 +39,7 @@ class ParserCalc():
                     numbers = ''
 
         # caso só exista somente numeros como entrada
-        if (numbers != '' and operators == '' and parent == ''):
+        if (numbers != '' and operators == ''):
             tokens.append(numbers)
         return tokens
     
