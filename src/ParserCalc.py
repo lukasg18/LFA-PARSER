@@ -14,7 +14,7 @@ class ParserCalc():
         self._current = tokens[0]
         self._operator = ''
 
-    def make_list(self, lst):
+    def mount_expression(self, lst):
         tokens = []
         numbers, operators = '', ''
 
@@ -46,7 +46,7 @@ class ParserCalc():
     def parser(self,lst):
         tokens = []
         try:
-            tokens = self.make_list(lst)
+            tokens = self.mount_expression(lst)
             print(ParserCalc(tokens).exp())
         except:
             print("expressao invalida")
