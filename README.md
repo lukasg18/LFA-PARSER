@@ -16,9 +16,7 @@ O código fonte está estruturado da seguinte maneira:
   - testes
 
 
-
-
-##### mel.py
+#### mel.py
 É um módulo que contém uma classe única chamada `MEL`, que tem por responsabilidade manipular as expressões matemáticas e encontrar o seu resultado.
 
 ```python
@@ -70,10 +68,11 @@ class MEL():
             print("expressao invalida")
 
 ```
-O trecho de codigo mostrado acima representa o construtor da classe. O construtor contém o "token", que é responsavel por amazenar a expressao inserida, o "current" que armazena a posição atual da expressao a ser processada e o operador que verifica se a expressao é negativa ou positiva.
+O trecho de código mostrado acima representa o construtor da classe. O construtor contém o "token", que é responsável por armazenar a expressão inserida, o "current" que armazena a posição atual da expressão a ser processada e o operador que verifica se a expressão é negativa ou positiva.
 
-O mesmo trecho citado acima também mostra o método chamado `parser`, que tem por responsabilidade ser um intermediario entre a montagem da expressao e a chamada da mesma.
-O método `parser` depois de executado, chamará os demais metodos da classe, seguindo as regras de produção definidas para a gramática que é mostrada logo abaixo.
+O mesmo trecho citado acima também mostra o método chamado `parser`, que tem por responsabilidade ser um intermediário entre a montagem da expressão e a chamada da mesma.
+O método `parser` depois de executado, chamará os demais métodos da classe, seguindo as regras de produção definidas para a gramática que é mostrada logo abaixo.
+
 
 * expr ::= term (('+' | '-') term)*
 * term ::= factor (('*' | '/' | '//' | '%') factor)*
@@ -82,8 +81,8 @@ O método `parser` depois de executado, chamará os demais metodos da classe, se
 * digit ::= '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9'
 
 
-##### main.py
-É o módulo que é contruido e que contém a execução principal do programa, o qual utiliza o módulo `ParserMEL.py` que contém a classe do parser e instancia um objeto fazendo chamada o método `parseExpression` passando como argumento a expressão e recebendo um valor como resultado. Como se pode notar no trecho abaixo a expressão é digitada pelo usuário.
+#### main.py
+É o módulo principal do programa, que tem como objetivo lê a expressão digitada pelo usuário e passar a informação lida para o método `parser`. Depois de receber a expressão, o método `replace` remove todos os espaços em branco e salva em uma lista utilizando o método `list`. Veja o trecho a seguir:
 
 ```python
 from mel import MEL
@@ -105,16 +104,39 @@ def main():
 if __name__ == '__main__':
     main()
 ```
+Caso a entrada seja vazia, é emitido uma mensagem no console para que tenha pelo menos uma  expressão inserida.
 
 ### Como executar?
-Para buildar/executar o app no ambiente Linux basta abrir o CLI(Command Line Interface) no diretório __/source__ e digitar o seguinte comando:
-    
-    python3 build.py
+Para executar o programa no ambiente Linux, basta abrir o CLI(Command Line Interface) no diretório __`/src`__ e digitar o seguinte comando:
 
-Neste comando como o SO é o Linux dist. Ubuntu 18.04 e já contém as versões ***2.7.15 e 3.6.7*** como default, o que torna fácil a execução de código utilizando esta linguagem. O outro comando seria a execução do arquivo .sh criado no mesmo diretório. Abaixo execute o mesmo comando que produzirá a mesma ação do primeiro comando mostrado acima:
+```shell
+    python3 main.py
+```
 
-    sh trab1.sh
-    
+Dentro dessa mesma pasta(`/src`) existe um script básico para execução do programa. O comando abaixo mostra como executar.
+
+```shell
+    ./trab1.sh
+```
+
+### Testes
+Para testes, foi criado um arquivo de testes chamado `testes.txt`, que fica dentro do diretório `/src/testes`. Esse arquivo contém algumas expressões que foram usadas para teste da gramática. Dentre eles, temos:
+```txt
+((2+2)*2)-((2-0)+2)
+Resposta: 4.0
+(10*5)+(100/10)-5+(7%(2^2))
+Resposta:58.0
+10 * 5 + 100 / 10 - 5 + 7 % 2
+Resposta: 56.0
+(-2.3)^2 + 2.2E1 * 2e1-12 + 1e1+3
+Resposta:446.29
+(-2.3)^2 + 2.2E1 * 2e1-12 + (1e1+3) % 2
+Resposta: 434.29
+2e5 + 3
+Resposta: 200003.0
+...
+```
+
 ### Informações adicionais
-Todo o código fonte está hospedado no meu [GitHub](https://github.com/lukasg18/LFA-PARSER).
+Todo o código fonte está hospedado no [GitHub](https://github.com/lukasg18/LFA-PARSER).
 
