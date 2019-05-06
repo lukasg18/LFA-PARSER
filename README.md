@@ -76,13 +76,14 @@ O trecho de código mostrado acima representa o construtor da classe. O construt
 O mesmo trecho citado acima também mostra o método chamado `parser`, que tem por responsabilidade ser um intermediário entre a montagem da expressão e a chamada da mesma.
 O método `parser` depois de executado, chamará os demais métodos da classe, seguindo as regras de produção definidas para a gramática que é mostrada logo abaixo.
 
-
-* expr ::= term (('+' | '-') term)*
-* term ::= factor (('*' | '/' | '//' | '%') factor)*
-* factor ::= base ('^' factor)?
-* base ::= (-) base | '(' expr ')'
-* digit ::= '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9'
-
+```html
+<expr>   ::= <term> ((‘+’ | ‘-’) <term>)*
+<term>   ::= <factor> ((‘*’ | ‘/’ | ‘//’ | ‘%’) <factor>)*
+<factor> ::= <base> (‘^’ <factor>)?
+<base>   ::= (‘-’) <base>
+           |  ‘(’ <expr> ‘)’
+<digit>  ::= ‘0’ | ‘1’ | ‘2’ | ‘3’ | ‘4’ | ‘5’ | ‘6’ | ‘7’ | ‘8’ | ‘9’
+```
 
 #### main.py
 É o módulo principal do programa, que tem como objetivo lê a expressão digitada pelo usuário e passar a informação lida para o método `parser`. Depois de receber a expressão, o método `replace` remove todos os espaços em branco e salva em uma lista utilizando o método `list`. Veja o trecho a seguir:
