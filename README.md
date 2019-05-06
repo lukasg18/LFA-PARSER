@@ -9,11 +9,14 @@ Implementação de um parser descendente recursivo para uma Linguagem Livre de C
 ### Descrição geral do código fonte
 O código fonte está estruturado da seguinte maneira:
 
-* src
-  - main.py
-  - mel.py
-  - trab1.sh
-  - testes
+```
+src
+|_ main.py
+|_ mel.py
+|_ trab1.sh
+|_ testes
+   |_ testes.txt
+```
 
 
 #### mel.py
